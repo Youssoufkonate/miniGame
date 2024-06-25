@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class miniGame {
+public class MiniGame {
 
     static class Room {
         String name;
@@ -62,23 +62,16 @@ public class miniGame {
 
         Scanner scanner = new Scanner(System.in);
 
-        // System.out.println("Welcome to the Text Adventure Game!");
-
-        while (currentRoom != 10) {
+        while (true) {
             Room room = rooms[currentRoom];
-            System.out.println(room.name);
-            System.out.println(room.description);
-            System.out.print("You can exit: \n");
-            for (String exit : room.exits.keySet()) {
-                System.out.print(exit + " ");
-            }
-            System.out.println();
-            System.out.print("Enter direction (or type 'X' to exit): ");
-            String input = scanner.nextLine().toUpperCase();
+            displayRoom(room);
+            String input = getUserInput(scanner);
+
             if (input.equals("X")) {
                 System.out.println("Game over!!!!");
                 break;
             }
+
             if (room.exits.containsKey(input)) {
                 int nextRoom = room.exits.get(input);
                 if (!visited[nextRoom]) {
@@ -90,8 +83,30 @@ public class miniGame {
             } else {
                 System.out.println("Invalid entry");
             }
+
+            if (currentRoom == 10) {
+                System.out.println(rooms[currentRoom].name);
+                System.out.println(rooms[currentRoom].description);
+                System.out.println("You have completed the game!");
+                break;
+            }
         }
 
         scanner.close();
+    }
+
+    private static void displayRoom(Room room) {
+        System.out.println(room.name);
+        System.out.println(room.description);
+        System.out.print("You can exit: ");
+        for (String exit : room.exits.keySet()) {
+            System.out.print(exit + " ");
+        }
+        System.out.println();
+    }
+
+    private static String getUserInput(Scanner scanner) {
+        System.out.print("Enter direction (or type 'X' to exit): ");
+        return scanner.nextLine().toUpperCase();
     }
 }
