@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class MiniGame {
+public class miniGame {
 
     static class Room {
         String name;
